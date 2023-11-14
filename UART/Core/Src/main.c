@@ -51,19 +51,19 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-void Delay(uint16_t milliseconds);
+void delay(uint16_t milliseconds);
 
-void BlinkBlue();
-void BlinkGreen();
-void BlinkOrange();
+void blinkBlue();
+void blinkGreen();
+void blinkOrange();
 
-void OnBlue();
-void OnGreen();
-void OnOrange();
+void onBlue();
+void onGreen();
+void onOrange();
 
-void OffBlue();
-void OffGreen();
-void OffOrange();
+void offBlue();
+void offGreen();
+void offOrange();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -227,39 +227,48 @@ static void MX_GPIO_Init(void)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
 	if (huart ->Instance == USART1){
+
 		if (znak == "q"){
-
+			blinkBlue();
 		}
+
 		else if("w"){
-
+			blinkGreen();
 
 		}
+
 		else if("e"){
-
+			blinkOrange();
 
 		}
+
 		else if("r"){
-
+			onBlue();
 
 		}
+
 		else if("t"){
-
+			onGreen();
 
 		}
+
 		else if("y"){
-
+			onOrange();
 
 		}
+
 		else if("u"){
-
+			offBlue();
 
 		}
+
 		else if("i"){
-
+			offGreen();
 
 		}
-		else if("o"){
 
+		else if("o"){
+			offOrange();
 
 		}
 
@@ -267,32 +276,32 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	}
 }
 
-void Delay(uint16_t milliseconds) {
+void delay(uint16_t milliseconds) {
       uint16_t start = HAL_GetTick();
       while (HAL_GetTick() - start < milliseconds) {
       }
   }
 
-void BlinkBlue(){
+void blinkBlue(){
 	HAL_GPIO_TogglePin(Blue_LED_GPIO_Port, Blue_LED_Pin);
-	Delay(500);
+	delay(500);
 }
 
-void BlinkGreen(){
+void blinkGreen(){
 	HAL_GPIO_TogglePin(Green_LED_GPIO_Port, Green_LED_Pin);
-	Delay(500);
+	delay(500);
 }
 
-void BlinkOrange(){
+void blinkOrange(){
 	HAL_GPIO_TogglePin(Orange_LED_GPIO_Port, Orange_LED_Pin);
-	Delay(500);
+	delay(500);
 }
 
-void OnBlue(){
+void onBlue(){
 	HAL_GPIO_WritePin(Blue_LED_GPIO_Port, Blue_LED_Pin, GPIO_PIN_SET);
 }
 
-void OnGreen(){
+void onGreen(){
 	HAL_GPIO_WritePin(Green_LED_GPIO_Port, Green_LED_Pin, GPIO_PIN_SET);
 }
 
