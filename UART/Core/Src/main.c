@@ -51,7 +51,17 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
+void BlinkBlue();
+void BlinkGreen();
+void BlinkOrange();
 
+void OnBlue();
+void OnGreen();
+void OnOrange();
+
+void OffBlue();
+void OffGreen();
+void OffOrange();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -223,7 +233,44 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		}
 		HAL_UART_Receive_IT(&huart1, &znak, 1);
 	}
-	}
+}
+
+void BlinkBlue(){
+
+}
+
+void BlinkGreen(){
+
+}
+
+void BlinkOrange(){
+
+}
+
+void OnBlue(){
+
+}
+
+void OnGreen(){
+
+}
+
+void onOrange(){
+
+}
+
+void offBlue(){
+
+}
+
+void offGreen(){
+
+}
+
+void offOrange(){
+
+}
+
 /* USER CODE END 4 */
 
 /**
