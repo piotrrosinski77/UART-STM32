@@ -51,6 +51,8 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
+void Delay(uint16_t milliseconds);
+
 void BlinkBlue();
 void BlinkGreen();
 void BlinkOrange();
@@ -208,14 +210,14 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(Green_LED_GPIO_Port, Green_LED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, Green_LED_Pin|Orange_LED_Pin|Blue_LED_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : Green_LED_Pin */
-  GPIO_InitStruct.Pin = Green_LED_Pin;
+  /*Configure GPIO pins : Green_LED_Pin Orange_LED_Pin Blue_LED_Pin */
+  GPIO_InitStruct.Pin = Green_LED_Pin|Orange_LED_Pin|Blue_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(Green_LED_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -234,6 +236,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		HAL_UART_Receive_IT(&huart1, &znak, 1);
 	}
 }
+
+void Delay(uint16_t milliseconds) {
+      uint16_t start = HAL_GetTick();
+      while (HAL_GetTick() - start < milliseconds) {
+      }
+  }
 
 void BlinkBlue(){
 
