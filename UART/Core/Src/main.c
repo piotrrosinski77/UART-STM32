@@ -227,12 +227,42 @@ static void MX_GPIO_Init(void)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
 	if (huart ->Instance == USART1){
-		if (znak == "e"){
-			HAL_GPIO_WritePin(Green_LED_GPIO_Port, Green_LED_Pin, GPIO_PIN_SET);
+		if (znak == "q"){
+
 		}
-		else if("d"){
-			HAL_GPIO_WritePin(Green_LED_GPIO_Port, Green_LED_Pin, GPIO_PIN_RESET);
+		else if("w"){
+
+
 		}
+		else if("e"){
+
+
+		}
+		else if("r"){
+
+
+		}
+		else if("t"){
+
+
+		}
+		else if("y"){
+
+
+		}
+		else if("u"){
+
+
+		}
+		else if("i"){
+
+
+		}
+		else if("o"){
+
+
+		}
+
 		HAL_UART_Receive_IT(&huart1, &znak, 1);
 	}
 }
@@ -259,27 +289,27 @@ void BlinkOrange(){
 }
 
 void OnBlue(){
-
+	HAL_GPIO_WritePin(Blue_LED_GPIO_Port, Blue_LED_Pin, GPIO_PIN_SET);
 }
 
 void OnGreen(){
-
+	HAL_GPIO_WritePin(Green_LED_GPIO_Port, Green_LED_Pin, GPIO_PIN_SET);
 }
 
 void onOrange(){
-
+	HAL_GPIO_WritePin(Orange_LED_GPIO_Port, Orange_LED_Pin, GPIO_PIN_SET);
 }
 
 void offBlue(){
-
+	HAL_GPIO_WritePin(Blue_LED_GPIO_Port, Blue_LED_Pin, GPIO_PIN_RESET);
 }
 
 void offGreen(){
-
+	HAL_GPIO_WritePin(Green_LED_GPIO_Port, Green_LED_Pin, GPIO_PIN_RESET);
 }
 
 void offOrange(){
-
+	HAL_GPIO_WritePin(Orange_LED_GPIO_Port, Orange_LED_Pin, GPIO_PIN_RESET);
 }
 
 /* USER CODE END 4 */
