@@ -244,15 +244,18 @@ void Delay(uint16_t milliseconds) {
   }
 
 void BlinkBlue(){
-
+	HAL_GPIO_TogglePin(Blue_LED_GPIO_Port, Blue_LED_Pin);
+	Delay(500);
 }
 
 void BlinkGreen(){
-
+	HAL_GPIO_TogglePin(Green_LED_GPIO_Port, Green_LED_Pin);
+	Delay(500);
 }
 
 void BlinkOrange(){
-
+	HAL_GPIO_TogglePin(Orange_LED_GPIO_Port, Orange_LED_Pin);
+	Delay(500);
 }
 
 void OnBlue(){
