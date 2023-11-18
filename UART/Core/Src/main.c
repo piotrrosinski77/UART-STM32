@@ -43,7 +43,7 @@
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-uint8_t znak;
+uint8_t command;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -51,7 +51,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-void delay(uint16_t milliseconds);
+void delay_ms(int time);
 
 void blinkBlue();
 void blinkGreen();
@@ -68,7 +68,6 @@ void offOrange();
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
@@ -94,14 +93,15 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  SysTick_Config(SystemCoreClock/1000);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
+  HAL_UART_Receive_IT(&huart1, &command, 1);
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart1, &znak, 1);
+  ;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -176,7 +176,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 9600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
@@ -226,75 +226,91 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
-	if (huart ->Instance == USART1){
+	if (huart -> Instance == USART1){
 
-		if (znak == "q"){
+		if (command == 'v'){
 			blinkBlue();
 		}
 
-		else if("w"){
+		else if (command == 'f'){
 			blinkGreen();
 
 		}
 
-		else if("e"){
+		else if (command == 'i'){
 			blinkOrange();
 
 		}
 
-		else if("r"){
+		else if (command == 'b'){
 			onBlue();
 
 		}
 
-		else if("t"){
+		else if (command == 'g'){
 			onGreen();
 
 		}
 
-		else if("y"){
+		else if (command == 'o'){
 			onOrange();
 
 		}
 
-		else if("u"){
+		else if (command == 'n'){
 			offBlue();
 
 		}
 
-		else if("i"){
+		else if (command == 'h'){
 			offGreen();
 
 		}
 
-		else if("o"){
+		else if (command == 'p'){
 			offOrange();
 
 		}
 
-		HAL_UART_Receive_IT(&huart1, &znak, 1);
+		HAL_UART_Receive_IT(&huart1, &command, 1);
 	}
 }
 
-void delay(uint16_t milliseconds) {
-      uint16_t start = HAL_GetTick();
-      while (HAL_GetTick() - start < milliseconds) {
-      }
-  }
+volatile uint32_t timer_ms = 0;
+
+void SysTick_Handler()
+{
+	HAL_IncTick();
+
+	if (timer_ms) {
+		timer_ms--;
+	}
+}
+
+void delay_ms(int time)
+{
+	timer_ms = time;
+	while (timer_ms) {};
+}
 
 void blinkBlue(){
 	HAL_GPIO_TogglePin(Blue_LED_GPIO_Port, Blue_LED_Pin);
-	delay(500);
+	delay_ms(500);
+	HAL_GPIO_TogglePin(Blue_LED_GPIO_Port, Blue_LED_Pin);
+	delay_ms(500);
+	HAL_GPIO_TogglePin(Blue_LED_GPIO_Port, Blue_LED_Pin);
+	delay_ms(500);
+	HAL_GPIO_WritePin(Blue_LED_GPIO_Port, Blue_LED_Pin, GPIO_PIN_RESET);
 }
 
 void blinkGreen(){
 	HAL_GPIO_TogglePin(Green_LED_GPIO_Port, Green_LED_Pin);
-	delay(500);
+	delay_ms(500);
 }
 
 void blinkOrange(){
 	HAL_GPIO_TogglePin(Orange_LED_GPIO_Port, Orange_LED_Pin);
-	delay(500);
+	delay_ms(500);
 }
 
 void onBlue(){
