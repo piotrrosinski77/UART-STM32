@@ -51,7 +51,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-void delay_ms(int time);
+//void HAL_Delay(int time);
 
 void blinkBlue();
 void blinkGreen();
@@ -93,15 +93,17 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+  HAL_InitTick(TICK_INT_PRIORITY);
   SysTick_Config(SystemCoreClock/1000);
+  HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0U);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
-  HAL_UART_Receive_IT(&huart1, &command, 1);
   /* USER CODE BEGIN 2 */
-  ;
+
+  HAL_UART_Receive_IT(&huart1, &command, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -275,7 +277,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		HAL_UART_Receive_IT(&huart1, &command, 1);
 	}
 }
-
+/*
 volatile uint32_t timer_ms = 0;
 
 void SysTick_Handler()
@@ -287,30 +289,38 @@ void SysTick_Handler()
 	}
 }
 
-void delay_ms(int time)
+void HAL_Delay(int time)
 {
 	timer_ms = time;
 	while (timer_ms) {};
-}
+}*/
 
 void blinkBlue(){
-	HAL_GPIO_TogglePin(Blue_LED_GPIO_Port, Blue_LED_Pin);
-	delay_ms(500);
-	HAL_GPIO_TogglePin(Blue_LED_GPIO_Port, Blue_LED_Pin);
-	delay_ms(500);
-	HAL_GPIO_TogglePin(Blue_LED_GPIO_Port, Blue_LED_Pin);
-	delay_ms(500);
-	HAL_GPIO_WritePin(Blue_LED_GPIO_Port, Blue_LED_Pin, GPIO_PIN_RESET);
+
+
+	for (int i = 1; i <= 20; i++) {
+
+		HAL_GPIO_TogglePin(Blue_LED_GPIO_Port, Blue_LED_Pin);
+		HAL_Delay(500);
+	}
 }
 
 void blinkGreen(){
-	HAL_GPIO_TogglePin(Green_LED_GPIO_Port, Green_LED_Pin);
-	delay_ms(500);
+
+	for (int i = 1; i <= 20; i++) {
+
+		HAL_GPIO_TogglePin(Green_LED_GPIO_Port, Green_LED_Pin);
+		HAL_Delay(500);
+	}
 }
 
 void blinkOrange(){
-	HAL_GPIO_TogglePin(Orange_LED_GPIO_Port, Orange_LED_Pin);
-	delay_ms(500);
+
+	for (int i = 1; i <= 20; i++) {
+
+		HAL_GPIO_TogglePin(Orange_LED_GPIO_Port, Orange_LED_Pin);
+		HAL_Delay(500);
+	}
 }
 
 void onBlue(){
